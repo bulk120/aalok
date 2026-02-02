@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Love, Nuzuu</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Raleway', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #fff9fb;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), 
+                        url('https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        .header-content {
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .subtitle {
+            font-size: 1.8rem;
+            font-weight: 300;
+            margin-bottom: 30px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .heart-icon {
+            color: #ff4d6d;
+            font-size: 2.5rem;
+            margin: 20px 0;
+            animation: heartbeat 1.5s infinite;
+        }
+
+        /* Section styling */
+        section {
+            padding: 100px 0;
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 50px;
+            color: #a12c51;
+        }
+
+        /* Our Story */
+        .story-content {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .story-text {
+            flex: 1;
+            min-width: 300px;
+            font-size: 1.2rem;
+            line-height: 1.8;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .story-image {
+            flex: 1;
+            min-width: 300px;
+            height: 400px;
+            background: url('https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80') center/cover;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Why I Love You */
+        .love-reasons {
+            background-color: #fff0f5;
+        }
+
+        .reasons-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .reason-card {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .reason-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .reason-card i {
+            font-size: 2.5rem;
+            color: #ff4d6d;
+            margin-bottom: 20px;
+        }
+
+        .reason-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #a12c51;
+        }
+
+        /* Memories */
+        .memories-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .memory-item {
+            height: 250px;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .memory-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .memory-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .memory-overlay {
+            position: absolute;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            width: 100%;
+            padding: 10px;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        /* Proposal Section */
+        .proposal-section {
+            background: linear-gradient(rgba(161, 44, 81, 0.9), rgba(161, 44, 81, 0.8)), 
+                        url('https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+        }
+
+        .proposal-section h2 {
+            color: white;
+        }
+
+        .proposal-text {
+            max-width: 800px;
+            margin: 0 auto 50px;
+            font-size: 1.3rem;
+            line-height: 1.8;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 10px;
+            backdrop-filter: blur(5px);
+        }
+
+        .proposal-button {
+            background-color: #ff4d6d;
+            color: white;
+            border: none;
+            padding: 20px 50px;
+            font-size: 1.5rem;
+            font-family: 'Playfair Display', serif;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .proposal-button:hover {
+            background-color: #ff3357;
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Proposal Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 50px;
+            border-radius: 15px;
+            text-align: center;
+            max-width: 600px;
+            width: 90%;
+            position: relative;
+            animation: popUp 0.5s ease-out;
+        }
+
+        .modal h3 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem;
+            color: #a12c51;
+            margin-bottom: 20px;
+        }
+
+        .modal p {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+        }
+
+        .ring-img {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 30px;
+            background-color: #f8f8f8;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 3rem;
+            color: #ffd700;
+        }
+
+        .answer-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+            position: relative;
+            min-height: 120px;
+        }
+
+        .yes-button {
+            padding: 15px 40px;
+            font-size: 1.3rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background-color: #4CAF50;
+            color: white;
+            position: relative;
+            z-index: 10;
+        }
+
+        .no-button {
+            padding: 15px 40px;
+            font-size: 1.3rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background-color: #f44336;
+            color: white;
+            position: absolute;
+            z-index: 5;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .yes-button:hover {
+            transform: scale(1.05);
+            background-color: #45a049;
+        }
+
+        .no-message {
+            position: absolute;
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1rem;
+            color: #666;
+            font-style: italic;
+            min-width: 300px;
+            text-align: center;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+            font-size: 1.1rem;
+        }
+
+        footer p {
+            margin: 10px 0;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes popUp {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes floatAway {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(var(--move-x), var(--move-y)) scale(0.8); opacity: 0; }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 { font-size: 3.5rem; }
+            h2 { font-size: 2.5rem; }
+            .subtitle { font-size: 1.5rem; }
+            section { padding: 60px 0; }
+            .proposal-text { font-size: 1.1rem; padding: 20px; }
+            .modal-content { padding: 30px 20px; }
+            .modal h3 { font-size: 2.8rem; }
+            .answer-buttons { flex-direction: column; align-items: center; }
+            .no-button { position: relative; margin-top: 20px; }
+        }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 2.8rem; }
+            .subtitle { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <h1>My Dearest Nuzuu</h1>
+            <div class="heart-icon">
+                <i class="fas fa-heart"></i>
+            </div>
+            <p class="subtitle">Every moment with you is a precious gift</p>
+            <p class="subtitle">Scroll down to see why you mean everything to me</p>
+        </div>
+        <div class="scroll-indicator">
+            <i class="fas fa-chevron-down" style="font-size: 2rem; position: absolute; bottom: 30px;"></i>
+        </div>
+    </header>
+
+    <!-- Our Story -->
+    <section id="our-story">
+        <div class="container">
+            <h2>Our Beautiful Journey</h2>
+            <div class="story-content">
+                <div class="story-text">
+                    <p>My darling Nuzuu, from the moment we met, my life changed in the most beautiful way. I remember our first conversation, our first laugh together, and that first moment I realized I was falling for you.</p>
+                    <p>Every day with you feels like a dream I never want to wake up from. You've brought so much light, laughter, and love into my world. We've shared countless memories, from our simple coffee dates to our adventurous trips, and each one is etched in my heart forever.</p>
+                    <p>You are my best friend, my confidant, and the person who understands me like no one else. With you, I feel completely myself, and I'm grateful for every second we spend together.</p>
+                    <p>This website is just a small token of my immense love for you, Nuzuu. You deserve the world and more.</p>
+                </div>
+                <div class="story-image"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why I Love You -->
+    <section id="why-i-love-you" class="love-reasons">
+        <div class="container">
+            <h2>Why I Love You</h2>
+            <div class="reasons-container">
+                <div class="reason-card">
+                    <i class="fas fa-smile-beam"></i>
+                    <h3>Your Beautiful Smile</h3>
+                    <p>The way your eyes light up when you smile melts my heart every single time. It's the most beautiful sight I've ever seen.</p>
+                </div>
+                <div class="reason-card">
+                    <i class="fas fa-heart"></i>
+                    <h3>Your Kind Heart</h3>
+                    <p>You have the most generous and caring soul. The way you treat everyone with kindness and compassion inspires me every day.</p>
+                </div>
+                <div class="reason-card">
+                    <i class="fas fa-laugh"></i>
+                    <h3>Your Sense of Humor</h3>
+                    <p>You can make me laugh even on my worst days. Your laughter is my favorite sound in the world.</p>
+                </div>
+                <div class="reason-card">
+                    <i class="fas fa-star"></i>
+                    <h3>You Make Me Better</h3>
+                    <p>With you by my side, I strive to be a better person every day. You bring out the best in me.</p>
+                </div>
+                <div class="reason-card">
+                    <i class="fas fa-hand-holding-heart"></i>
+                    <h3>Your Support</h3>
+                    <p>You've stood by me through everything, believing in me even when I didn't believe in myself. Your unwavering support means everything.</p>
+                </div>
+                <div class="reason-card">
+                    <i class="fas fa-magic"></i>
+                    <h3>Your Unique Spirit</h3>
+                    <p>You're unlike anyone I've ever met - creative, passionate, and wonderfully unique. You add magic to my life.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Memories -->
+    <section id="memories">
+        <div class="container">
+            <h2>Our Precious Memories</h2>
+            <div class="memories-container">
+                <div class="memory-item">
+                    <img src="https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80" alt="Memory 1">
+                    <div class="memory-overlay">Our First Date</div>
+                </div>
+                <div class="memory-item">
+                    <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Memory 2">
+                    <div class="memory-overlay">Beach Sunset</div>
+                </div>
+                <div class="memory-item">
+                    <img src="https://images.unsplash.com/photo-1543163521-1bf539c55dd2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Memory 3">
+                    <div class="memory-overlay">Coffee Mornings</div>
+                </div>
+                <div class="memory-item">
+                    <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80" alt="Memory 4">
+                    <div class="memory-overlay">Celebrations</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Proposal Section -->
+    <section class="proposal-section">
+        <div class="container">
+            <h2>The Most Important Question</h2>
+            <div class="proposal-text">
+                <p>My darling Nuzuu, every day with you has been a blessing. You've filled my life with so much joy, love, and happiness that I can't imagine a single day without you.</p>
+                <p>You are my sunrise and my sunset, my today and my tomorrow. I want to wake up next to you every morning and fall asleep holding you every night for the rest of my life.</p>
+                <p>You are my everything, and today, I want to ask you the most important question of my life.</p>
+            </div>
+            <button class="proposal-button" id="propose-btn">Will You Marry Me?</button>
+        </div>
+    </section>
+
+    <!-- Proposal Modal -->
+    <div class="modal" id="proposal-modal">
+        <div class="modal-content">
+            <div class="ring-img">
+                <i class="fas fa-gem"></i>
+            </div>
+            <h3>My Dearest Nuzuu</h3>
+            <p>You are the love of my life, my best friend, and my greatest adventure. I can't imagine my future without you in it.</p>
+            <p>Will you do me the incredible honor of becoming my wife? Will you make me the happiest man alive and marry me?</p>
+            <div class="answer-buttons">
+                <button class="yes-button" id="yes-btn">YES! A Thousand Times Yes!</button>
+                <button class="no-button" id="no-btn">No</button>
+                <div class="no-message" id="no-message">Try to catch me if you can!</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>Made with <i class="fas fa-heart" style="color: #ff4d6d;"></i> for the most amazing woman in the world</p>
+            <p>My love for you is eternal, Nuzuu</p>
+            <p>© <span id="current-year"></span> Forever Yours</p>
+        </div>
+    </footer>
+
+    <script>
+        // Set current year in footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+        
+        // Proposal button functionality
+        const proposeBtn = document.getElementById('propose-btn');
+        const proposalModal = document.getElementById('proposal-modal');
+        const yesBtn = document.getElementById('yes-btn');
+        const noBtn = document.getElementById('no-btn');
+        const noMessage = document.getElementById('no-message');
+        
+        // Array of funny messages for the "No" button
+        const noMessages = [
+            "Try to catch me if you can!",
+            "I'm too quick for you!",
+            "Not so fast!",
+            "You'll have to be quicker!",
+            "Missed me!",
+            "I'm a slippery one!",
+            "Almost got me!",
+            "Too slow!",
+            "You can't catch me!",
+            "I'm like a butterfly!",
+            "Maybe next time!",
+            "Nope, not today!",
+            "You'll have to try harder!",
+            "I'm too smart for that!",
+            "Catch me if you can!",
+            "You're getting closer!",
+            "So close yet so far!",
+            "Almost had me there!",
+            "I'm a moving target!",
+            "You're persistent, I'll give you that!"
+        ];
+        
+        // Counter for attempts
+        let attemptCount = 0;
+        
+        proposeBtn.addEventListener('click', function() {
+            proposalModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            // Reset the no button position
+            resetNoButtonPosition();
+        });
+        
+        yesBtn.addEventListener('click', function() {
+            alert("You've made me the happiest man alive! I love you so much, Nuzuu! ❤️");
+            proposalModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+            
+            // Create celebration effect
+            createCelebration();
+        });
+        
+        // Function to reset no button to a random position
+        function resetNoButtonPosition() {
+            const modalContent = document.querySelector('.modal-content');
+            const modalRect = modalContent.getBoundingClientRect();
+            
+            // Set random position within modal
+            const maxX = modalRect.width - noBtn.offsetWidth - 40;
+            const maxY = modalRect.height - noBtn.offsetHeight - 40;
+            
+            const randomX = Math.random() * maxX;
+            const randomY = Math.random() * maxY;
+            
+            noBtn.style.left = `${randomX}px`;
+            noBtn.style.top = `${randomY}px`;
+            
+            // Reset message
+            noMessage.textContent = "Try to catch me if you can!";
+            attemptCount = 0;
+        }
+        
+        // Function to move the no button when hovered or clicked
+        function moveNoButton() {
+            const modalContent = document.querySelector('.modal-content');
+            const modalRect = modalContent.getBoundingClientRect();
+            
+            // Calculate new random position
+            const maxX = modalRect.width - noBtn.offsetWidth - 40;
+            const maxY = modalRect.height - noBtn.offsetHeight - 40;
+            
+            const randomX = Math.random() * maxX;
+            const randomY = Math.random() * maxY;
+            
+            // Apply the new position with animation
+            noBtn.style.transition = 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+            noBtn.style.left = `${randomX}px`;
+            noBtn.style.top = `${randomY}px`;
+            
+            // Change the message
+            attemptCount++;
+            noMessage.textContent = noMessages[attemptCount % noMessages.length];
+            
+            // Make button smaller and change color as attempts increase
+            const scale = Math.max(0.7, 1 - (attemptCount * 0.05));
+            noBtn.style.transform = `scale(${scale})`;
+            
+            // Change to lighter red as attempts increase
+            const redValue = Math.max(100, 255 - (attemptCount * 10));
+            noBtn.style.backgroundColor = `rgb(${redValue}, 50, 50)`;
+            
+            // If many attempts, change text to encourage clicking yes
+            if (attemptCount > 8) {
+                noMessage.textContent = "Maybe you should try the YES button instead?";
+            }
+            
+            if (attemptCount > 12) {
+                noMessage.textContent = "The YES button doesn't move, you know...";
+            }
+            
+            if (attemptCount > 15) {
+                noMessage.textContent = "Okay, I surrender! Click YES already!";
+                // Make the button stop moving after many attempts
+                noBtn.style.pointerEvents = 'none';
+                noBtn.style.opacity = '0.5';
+                setTimeout(() => {
+                    noBtn.style.pointerEvents = 'auto';
+                    noBtn.style.opacity = '1';
+                }, 2000);
+            }
+        }
+        
+        // Add multiple event listeners to make it extra tricky
+        noBtn.addEventListener('mouseenter', moveNoButton);
+        noBtn.addEventListener('mouseover', moveNoButton);
+        noBtn.addEventListener('mousemove', function(e) {
+            // Move button if cursor gets too close
+            const rect = noBtn.getBoundingClientRect();
+            const cursorX = e.clientX;
+            const cursorY = e.clientY;
+            
+            // Check if cursor is within 50px of button
+            if (Math.abs(cursorX - (rect.left + rect.width/2)) < 50 && 
+                Math.abs(cursorY - (rect.top + rect.height/2)) < 50) {
+                // Small chance to move even on mousemove
+                if (Math.random() > 0.7) {
+                    moveNoButton();
+                }
+            }
+        });
+        
+        noBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            moveNoButton();
+            
+            // Special effect when finally clicked (though it's hard!)
+            if (attemptCount > 5) {
+                createSparkleEffect(e.clientX, e.clientY);
+            }
+            
+            return false;
+        });
+        
+        // Also move button periodically
+        setInterval(() => {
+            if (proposalModal.style.display === 'flex') {
+                // Small chance to move randomly
+                if (Math.random() > 0.95) {
+                    moveNoButton();
+                }
+            }
+        }, 1000);
+        
+        // Close modal when clicking outside
+        proposalModal.addEventListener('click', function(e) {
+            if (e.target === proposalModal) {
+                proposalModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        // Celebration effect
+        function createCelebration() {
+            const celebration = document.createElement('div');
+            celebration.style.position = 'fixed';
+            celebration.style.top = '0';
+            celebration.style.left = '0';
+            celebration.style.width = '100%';
+            celebration.style.height = '100%';
+            celebration.style.pointerEvents = 'none';
+            celebration.style.zIndex = '9999';
+            document.body.appendChild(celebration);
+            
+            // Create hearts
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.innerHTML = '❤️';
+                    heart.style.position = 'absolute';
+                    heart.style.fontSize = Math.random() * 30 + 20 + 'px';
+                    heart.style.left = Math.random() * 100 + 'vw';
+                    heart.style.top = '100%';
+                    heart.style.opacity = '0.8';
+                    celebration.appendChild(heart);
+                    
+                    // Animate heart
+                    const animation = heart.animate([
+                        { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
+                        { transform: `translateY(-${window.innerHeight + 100}px) rotate(${Math.random() * 360}deg)`, opacity: 0 }
+                    ], {
+                        duration: Math.random() * 3000 + 2000,
+                        easing: 'cubic-bezier(0.215, 0.610, 0.355, 1)'
+                    });
+                    
+                    // Remove heart after animation
+                    animation.onfinish = () => heart.remove();
+                }, i * 100);
+            }
+            
+            // Remove celebration element after animation
+            setTimeout(() => {
+                celebration.remove();
+            }, 6000);
+        }
+        
+        // Sparkle effect for when no button is clicked
+        function createSparkleEffect(x, y) {
+            for (let i = 0; i < 10; i++) {
+                setTimeout(() => {
+                    const sparkle = document.createElement('div');
+                    sparkle.innerHTML = '✨';
+                    sparkle.style.position = 'fixed';
+                    sparkle.style.left = (x - 15) + 'px';
+                    sparkle.style.top = (y - 15) + 'px';
+                    sparkle.style.fontSize = '20px';
+                    sparkle.style.zIndex = '1001';
+                    sparkle.style.pointerEvents = 'none';
+                    document.body.appendChild(sparkle);
+                    
+                    // Animate sparkle
+                    const angle = Math.random() * Math.PI * 2;
+                    const distance = 50 + Math.random() * 50;
+                    const endX = x + Math.cos(angle) * distance;
+                    const endY = y + Math.sin(angle) * distance;
+                    
+                    sparkle.animate([
+                        { transform: 'translate(0, 0) scale(1)', opacity: 1 },
+                        { transform: `translate(${endX - x}px, ${endY - y}px) scale(0)`, opacity: 0 }
+                    ], {
+                        duration: 800 + Math.random() * 400,
+                        easing: 'cubic-bezier(0.215, 0.610, 0.355, 1)'
+                    }).onfinish = () => sparkle.remove();
+                }, i * 50);
+            }
+        }
+        
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
