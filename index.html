@@ -131,9 +131,14 @@
             margin-top: 20px;
         }
 
-        .submit-btn:hover {
+        .submit-btn:hover:not(:disabled) {
             background-color: #ff3357;
             transform: scale(1.05);
+        }
+
+        .submit-btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
         }
 
         .hint {
@@ -148,6 +153,12 @@
 
         .hint.show {
             opacity: 1;
+        }
+
+        .attempt-counter {
+            margin-top: 10px;
+            font-size: 1rem;
+            color: #666;
         }
 
         /* Game 2: Qualities Selection */
@@ -181,54 +192,60 @@
             border-color: #388E3C;
         }
 
-        .quality-option.bad {
-            background-color: #f8d7da;
-            color: #721c24;
-        }
-
-        .quality-option.bad.selected {
+        .quality-option.wrong {
             background-color: #f44336;
             color: white;
             border-color: #d32f2f;
             animation: shake 0.5s;
         }
 
-        /* Game 3: Best Person Competition */
-        .competition-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
+        .quality-option.disabled {
+            opacity: 0.5;
+            pointer-events: none;
         }
 
-        .competition-option {
+        /* Game 3: King Comparison Game */
+        .comparison-game {
+            text-align: center;
+        }
+
+        .comparison-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 50px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .comparison-option {
+            width: 250px;
+            height: 300px;
             border-radius: 15px;
             overflow: hidden;
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
             position: relative;
-            height: 250px;
         }
 
-        .competition-option img {
+        .comparison-option img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.5s ease;
         }
 
-        .competition-option:hover img {
+        .comparison-option:hover {
             transform: scale(1.05);
         }
 
-        .competition-option.correct {
+        .comparison-option.selected {
             border: 5px solid #4CAF50;
         }
 
-        .competition-option.wrong {
-            animation: vibrate 0.5s;
+        .comparison-option.wrong {
             border: 5px solid #f44336;
+            animation: vibrate 0.5s;
         }
 
         .option-label {
@@ -238,9 +255,24 @@
             right: 0;
             background: rgba(0, 0, 0, 0.7);
             color: white;
-            padding: 10px;
+            padding: 15px;
             text-align: center;
             font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .vs {
+            font-size: 2.5rem;
+            color: #ff4d6d;
+            font-weight: bold;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .king-title {
+            font-size: 2rem;
+            color: #a12c51;
+            margin-bottom: 30px;
+            font-family: 'Playfair Display', serif;
         }
 
         /* Our Photos Section */
@@ -469,11 +501,6 @@
             80% { transform: translateX(5px) rotate(1deg); }
         }
 
-        @keyframes floatAway {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(var(--move-x), var(--move-y)) scale(0.8); opacity: 0; }
-        }
-
         /* Responsive */
         @media (max-width: 768px) {
             h1 { font-size: 3.5rem; }
@@ -482,7 +509,8 @@
             section { padding: 60px 0; }
             .game-section { padding: 40px 20px; }
             .qualities-container { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
-            .competition-container { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+            .comparison-container { flex-direction: column; }
+            .vs { transform: rotate(90deg); margin: 20px 0; }
             .proposal-buttons { flex-direction: column; align-items: center; }
             .proposal-yes, .proposal-no { width: 100%; max-width: 300px; }
             .love-letter { padding: 40px 20px; }
@@ -563,6 +591,7 @@
                 <div class="name-game">
                     <input type="text" class="name-input" id="name-input" placeholder="Enter your full name">
                     <br>
+                    <div class="attempt-counter" id="attempt-counter">Attempts left: 3</div>
                     <button class="submit-btn" id="name-submit">Submit Name</button>
                     <div class="hint" id="name-hint"></div>
                 </div>
@@ -577,7 +606,7 @@
                 <h2>Challenge 2: Why Should I Date You?</h2>
                 <div class="game-instructions">
                     <p>Select all the qualities that make you an amazing partner.</p>
-                    <p>But beware - some choices might disappear if they're not good enough!</p>
+                    <p>But beware - wrong choices will disappear with a message!</p>
                     <p id="quality-counter">Selected: 0/9 good qualities</p>
                 </div>
                 <div class="qualities-container" id="qualities-container">
@@ -590,19 +619,22 @@
         </div>
     </section>
 
-    <!-- Game 3: Best Person Competition -->
+    <!-- Game 3: King Comparison Game -->
     <section id="game-3" style="display: none;">
         <div class="container">
             <div class="game-section">
-                <h2>Challenge 3: Best Person in the World Competition</h2>
+                <h2>Challenge 3: King of My Heart Competition</h2>
                 <div class="game-instructions">
-                    <p>Choose the best person in the world from the options below.</p>
-                    <p><em>Hint: Pick the one who makes my world complete</em></p>
+                    <p>In each round, choose who deserves to be the King of your heart.</p>
+                    <p>Compare me with others and choose the better option!</p>
                 </div>
-                <div class="competition-container" id="competition-container">
-                    <!-- Competition options will be added by JavaScript -->
+                <div class="comparison-game">
+                    <div class="king-title" id="round-title">Round 1: Who deserves to be King of your heart?</div>
+                    <div class="comparison-container" id="comparison-container">
+                        <!-- Comparison options will be added by JavaScript -->
+                    </div>
+                    <div class="hint" id="comparison-hint"></div>
                 </div>
-                <div class="hint" id="competition-hint"></div>
             </div>
         </div>
     </section>
@@ -646,7 +678,7 @@
                     <p>You are my everything, and now I want to ask you the most important question of my life...</p>
                 </div>
                 
-                <h2 style="font-size: 4rem; margin: 40px 0;">Will You Marry Me, Nuzuu Alok?</h2>
+                <h2 style="font-size: 4rem; margin: 40px 0;">Will You Marry Me, Nuzuu?</h2>
                 
                 <div class="proposal-buttons">
                     <button class="proposal-yes" id="final-yes">YES! A Thousand Times Yes!</button>
@@ -691,7 +723,7 @@
     <footer>
         <div class="container">
             <p>Made with <i class="fas fa-heart" style="color: #ff4d6d;"></i> for the most amazing woman in the world</p>
-            <p>My love for you is eternal, Nuzuu Alok</p>
+            <p>My love for you is eternal, Nuzuu</p>
             <p>© <span id="current-year"></span> Forever Yours</p>
         </div>
     </footer>
@@ -729,16 +761,19 @@
         // Game State
         let gameState = {
             nameAttempts: 0,
+            maxNameAttempts: 3,
             selectedQualities: 0,
             totalGoodQualities: 9,
-            gameCompleted: false
+            comparisonRound: 1,
+            totalComparisonRounds: 3,
+            comparisonCompleted: false
         };
         
         // Update progress bar
         function updateProgress() {
-            const progress = (gameState.nameAttempts >= 2 ? 25 : 0) + 
-                           (gameState.selectedQualities >= 9 ? 25 : 0) + 
-                           (document.getElementById('game-3').style.display !== 'none' ? 25 : 0) +
+            const progress = (gameState.nameAttempts >= gameState.maxNameAttempts ? 25 : 0) + 
+                           (gameState.selectedQualities >= gameState.totalGoodQualities ? 25 : 0) + 
+                           (gameState.comparisonCompleted ? 25 : 0) +
                            (document.getElementById('our-photos').style.display !== 'none' ? 25 : 0);
             
             document.getElementById('progress-bar').style.width = progress + '%';
@@ -748,10 +783,15 @@
         const nameInput = document.getElementById('name-input');
         const nameSubmit = document.getElementById('name-submit');
         const nameHint = document.getElementById('name-hint');
+        const attemptCounter = document.getElementById('attempt-counter');
         
         nameSubmit.addEventListener('click', function() {
             const enteredName = nameInput.value.trim().toLowerCase();
             gameState.nameAttempts++;
+            
+            // Update attempt counter
+            const attemptsLeft = gameState.maxNameAttempts - gameState.nameAttempts;
+            attemptCounter.textContent = `Attempts left: ${attemptsLeft}`;
             
             // Check if she entered "Nuzuu Alok" or variations
             const acceptedNames = [
@@ -787,26 +827,29 @@
                 }, 1500);
             } else {
                 // Wrong name
-                if (gameState.nameAttempts === 1) {
-                    nameHint.textContent = "Hmm, that doesn't seem quite right...";
-                    nameHint.classList.add('show');
+                if (gameState.nameAttempts < gameState.maxNameAttempts) {
+                    // Give hints but don't reveal full name
+                    if (gameState.nameAttempts === 1) {
+                        nameHint.textContent = "Hmm, that doesn't seem quite right... Try thinking about our future together.";
+                        nameHint.classList.add('show');
+                    } else if (gameState.nameAttempts === 2) {
+                        nameHint.textContent = "Not quite... Maybe what your name would be if we were married?";
+                        nameHint.classList.add('show');
+                    }
                     nameInput.value = '';
-                } else if (gameState.nameAttempts >= 2) {
-                    nameHint.textContent = "Maybe try entering your future name? Nuzuu Alok? ;)";
+                    nameInput.focus();
+                } else {
+                    // After max attempts, let her proceed anyway
+                    nameHint.textContent = "Alright, I'll give you a hint for next time... Think: Nuzuu + Alok 😉";
                     nameHint.classList.add('show');
+                    nameInput.disabled = true;
+                    nameSubmit.disabled = true;
                     
-                    // After 2 attempts, let her proceed anyway
+                    // Show Game 2 after delay
                     setTimeout(() => {
-                        nameHint.textContent = "Okay, I'll let you through... but remember: Nuzuu Alok!";
-                        nameInput.disabled = true;
-                        nameSubmit.disabled = true;
-                        
-                        // Show Game 2 after delay
-                        setTimeout(() => {
-                            document.getElementById('game-2').style.display = 'block';
-                            updateProgress();
-                            document.getElementById('game-2').scrollIntoView({ behavior: 'smooth' });
-                        }, 2000);
+                        document.getElementById('game-2').style.display = 'block';
+                        updateProgress();
+                        document.getElementById('game-2').scrollIntoView({ behavior: 'smooth' });
                     }, 2000);
                 }
             }
@@ -822,67 +865,73 @@
         });
         
         // Game 2: Qualities Selection
+        // Shuffled qualities - good and bad mixed together
         const qualities = [
             { text: "Makes you laugh every day", good: true },
             { text: "Always supportive", good: true },
+            { text: "Forgets important dates", good: false },
             { text: "Beautiful smile", good: true },
             { text: "Kind heart", good: true },
+            { text: "Hogs the blanket", good: false },
             { text: "Your best friend", good: true },
+            { text: "Always late", good: false },
             { text: "Makes you a better person", good: true },
             { text: "Shares your dreams", good: true },
-            { text: "Loves you unconditionally", good: true },
-            { text: "Your perfect partner", good: true },
-            { text: "Forgets important dates", good: false },
-            { text: "Hogs the blanket", good: false },
-            { text: "Always late", good: false },
             { text: "Terrible at cooking", good: false },
+            { text: "Loves you unconditionally", good: true },
             { text: "Snores loudly", good: false },
+            { text: "Your perfect partner", good: true },
             { text: "Leaves socks everywhere", good: false }
         ];
+        
+        // Shuffle the qualities array
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+        
+        const shuffledQualities = shuffleArray([...qualities]);
         
         const qualitiesContainer = document.getElementById('qualities-container');
         const qualityCounter = document.getElementById('quality-counter');
         const qualitiesSubmit = document.getElementById('qualities-submit');
         
         // Create quality buttons
-        qualities.forEach(quality => {
+        shuffledQualities.forEach(quality => {
             const button = document.createElement('div');
-            button.className = `quality-option ${quality.good ? '' : 'bad'}`;
+            button.className = `quality-option`;
             button.textContent = quality.text;
             button.dataset.good = quality.good;
             
             button.addEventListener('click', function() {
-                if (button.classList.contains('selected')) {
-                    // Deselect
-                    button.classList.remove('selected');
-                    if (quality.good) {
-                        gameState.selectedQualities--;
-                    }
-                } else {
-                    // Select
-                    if (quality.good) {
-                        button.classList.add('selected');
-                        gameState.selectedQualities++;
-                    } else {
-                        // Bad quality - shake and disappear
-                        button.classList.add('selected');
-                        setTimeout(() => {
-                            button.style.opacity = '0';
-                            button.style.transform = 'scale(0)';
-                            setTimeout(() => {
-                                button.style.display = 'none';
-                            }, 300);
-                        }, 500);
-                    }
+                if (button.classList.contains('selected') || button.classList.contains('disabled')) {
+                    return;
                 }
                 
-                // Update counter
-                qualityCounter.textContent = `Selected: ${gameState.selectedQualities}/${gameState.totalGoodQualities} good qualities`;
-                
-                // Enable submit button if all good qualities selected
-                if (gameState.selectedQualities >= gameState.totalGoodQualities) {
-                    qualitiesSubmit.disabled = false;
-                    qualitiesSubmit.innerHTML = '<i class="fas fa-heart"></i> Continue to Next Challenge <i class="fas fa-heart"></i>';
+                if (quality.good) {
+                    // Good quality - select it
+                    button.classList.add('selected');
+                    gameState.selectedQualities++;
+                    
+                    // Update counter
+                    qualityCounter.textContent = `Selected: ${gameState.selectedQualities}/${gameState.totalGoodQualities} good qualities`;
+                    
+                    // Enable submit button if all good qualities selected
+                    if (gameState.selectedQualities >= gameState.totalGoodQualities) {
+                        qualitiesSubmit.disabled = false;
+                        qualitiesSubmit.innerHTML = '<i class="fas fa-heart"></i> Continue to Next Challenge <i class="fas fa-heart"></i>';
+                    }
+                } else {
+                    // Bad quality - show wrong animation and disable
+                    button.classList.add('wrong');
+                    setTimeout(() => {
+                        button.classList.remove('wrong');
+                        button.classList.add('disabled');
+                        button.textContent = "Oops! Not this one!";
+                    }, 500);
                 }
                 
                 updateProgress();
@@ -895,64 +944,119 @@
             // Show Game 3
             document.getElementById('game-3').style.display = 'block';
             updateProgress();
+            loadComparisonRound();
             document.getElementById('game-3').scrollIntoView({ behavior: 'smooth' });
         });
         
-        // Game 3: Best Person Competition
-        const competitionContainer = document.getElementById('competition-container');
-        const competitionHint = document.getElementById('competition-hint');
-        
-        const competitors = [
-            { name: "Nuzuu", correct: true, emoji: "👸" },
-            { name: "A Duck", correct: false, emoji: "🦆" },
-            { name: "Darth Vader", correct: false, emoji: "😈" },
-            { name: "Random Celebrity", correct: false, emoji: "🌟" },
-            { name: "A Cute Puppy", correct: false, emoji: "🐶" },
-            { name: "A Funny Meme", correct: false, emoji: "😂" }
+        // Game 3: King Comparison Game
+        const comparisonRounds = [
+            {
+                title: "Round 1: Who makes your heart beat faster?",
+                option1: { name: "Alok", correct: true, emoji: "👑" },
+                option2: { name: "A random celebrity", correct: false, emoji: "🌟" }
+            },
+            {
+                title: "Round 2: Who understands you better?",
+                option1: { name: "Alok", correct: true, emoji: "💖" },
+                option2: { name: "A psychic", correct: false, emoji: "🔮" }
+            },
+            {
+                title: "Round 3: Who will love you forever?",
+                option1: { name: "Alok", correct: true, emoji: "💍" },
+                option2: { name: "Your favorite TV character", correct: false, emoji: "📺" }
+            }
         ];
         
-        // Create competition options
-        competitors.forEach(competitor => {
-            const option = document.createElement('div');
-            option.className = 'competition-option';
-            if (competitor.correct) {
-                option.classList.add('correct');
-            }
+        const comparisonContainer = document.getElementById('comparison-container');
+        const comparisonHint = document.getElementById('comparison-hint');
+        const roundTitle = document.getElementById('round-title');
+        
+        function loadComparisonRound() {
+            const round = comparisonRounds[gameState.comparisonRound - 1];
+            roundTitle.textContent = round.title;
+            comparisonContainer.innerHTML = '';
+            comparisonHint.textContent = '';
+            comparisonHint.classList.remove('show');
             
-            option.innerHTML = `
-                <div style="width:100%; height:100%; background-color: ${competitor.correct ? '#ffd1dc' : '#f0f0f0'}; display: flex; justify-content: center; align-items: center; font-size: 5rem;">
-                    ${competitor.emoji}
+            // Create Alok option
+            const alokOption = document.createElement('div');
+            alokOption.className = 'comparison-option';
+            alokOption.dataset.correct = true;
+            alokOption.innerHTML = `
+                <div style="width:100%; height:100%; background: linear-gradient(135deg, #ffd1dc, #ff4d6d); display: flex; justify-content: center; align-items: center; font-size: 5rem;">
+                    ${round.option1.emoji}
                 </div>
-                <div class="option-label">${competitor.name}</div>
+                <div class="option-label">${round.option1.name}</div>
             `;
             
-            option.addEventListener('click', function() {
-                if (competitor.correct) {
-                    // Correct choice - proceed
-                    competitionHint.textContent = "Perfect choice! Of course it's you, my beautiful Nuzuu!";
-                    competitionHint.classList.add('show');
-                    
-                    // Show photos section after delay
-                    setTimeout(() => {
-                        document.getElementById('our-photos').style.display = 'block';
-                        updateProgress();
-                        document.getElementById('our-photos').scrollIntoView({ behavior: 'smooth' });
-                    }, 1500);
-                } else {
-                    // Wrong choice - vibrate
-                    option.classList.add('wrong');
-                    competitionHint.textContent = "Try again! Pick the person who makes my heart skip a beat!";
-                    competitionHint.classList.add('show');
-                    
-                    // Remove vibration class after animation
-                    setTimeout(() => {
-                        option.classList.remove('wrong');
-                    }, 500);
-                }
-            });
+            // Create VS
+            const vsDiv = document.createElement('div');
+            vsDiv.className = 'vs';
+            vsDiv.textContent = 'VS';
             
-            competitionContainer.appendChild(option);
-        });
+            // Create other option
+            const otherOption = document.createElement('div');
+            otherOption.className = 'comparison-option';
+            otherOption.dataset.correct = false;
+            otherOption.innerHTML = `
+                <div style="width:100%; height:100%; background: linear-gradient(135deg, #c9e9ff, #2196f3); display: flex; justify-content: center; align-items: center; font-size: 5rem;">
+                    ${round.option2.emoji}
+                </div>
+                <div class="option-label">${round.option2.name}</div>
+            `;
+            
+            // Add click events
+            alokOption.addEventListener('click', handleComparisonChoice);
+            otherOption.addEventListener('click', handleComparisonChoice);
+            
+            comparisonContainer.appendChild(alokOption);
+            comparisonContainer.appendChild(vsDiv);
+            comparisonContainer.appendChild(otherOption);
+        }
+        
+        function handleComparisonChoice(e) {
+            const option = e.currentTarget;
+            const isCorrect = option.dataset.correct === 'true';
+            
+            if (isCorrect) {
+                // Correct choice
+                option.classList.add('selected');
+                comparisonHint.textContent = "Perfect choice! Of course it's me!";
+                comparisonHint.classList.add('show');
+                
+                // Move to next round or complete game
+                setTimeout(() => {
+                    if (gameState.comparisonRound < gameState.totalComparisonRounds) {
+                        gameState.comparisonRound++;
+                        loadComparisonRound();
+                    } else {
+                        // All rounds completed
+                        gameState.comparisonCompleted = true;
+                        comparisonHint.textContent = "You chose me every time! You're ready for the final challenge!";
+                        comparisonHint.classList.add('show');
+                        
+                        // Show photos section after delay
+                        setTimeout(() => {
+                            document.getElementById('our-photos').style.display = 'block';
+                            updateProgress();
+                            document.getElementById('our-photos').scrollIntoView({ behavior: 'smooth' });
+                        }, 2000);
+                    }
+                }, 1500);
+            } else {
+                // Wrong choice
+                option.classList.add('wrong');
+                comparisonHint.textContent = "Wrong choice! Try again - pick the King of your heart!";
+                comparisonHint.classList.add('show');
+                
+                // Remove vibration class after animation
+                setTimeout(() => {
+                    option.classList.remove('wrong');
+                }, 500);
+            }
+            
+            updateProgress();
+        }
         
         // Photos continue button
         document.getElementById('photos-continue').addEventListener('click', function() {
@@ -986,7 +1090,7 @@
             createCelebration();
             
             // Update footer with married name
-            document.querySelector('footer p:nth-child(2)').textContent = "My love for you is eternal, Mrs. Nuzuu Alok";
+            document.querySelector('footer p:nth-child(2)').textContent = "My love for you is eternal, Nuzuu Alok";
             
             // Scroll to letter
             setTimeout(() => {
