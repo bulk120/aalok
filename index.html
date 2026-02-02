@@ -401,6 +401,48 @@
             transition: width 0.5s ease;
         }
 
+        /* Countdown Timer */
+        .countdown-container {
+            text-align: center;
+            margin: 40px 0;
+            padding: 30px;
+            background: linear-gradient(135deg, #ff4d6d, #a12c51);
+            border-radius: 20px;
+            color: white;
+        }
+
+        .countdown-title {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .countdown-timer {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            font-size: 3rem;
+            font-weight: bold;
+        }
+
+        .countdown-unit {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .countdown-value {
+            font-size: 4rem;
+            line-height: 1;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .countdown-label {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+
         /* Animations */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
@@ -444,12 +486,15 @@
             .proposal-buttons { flex-direction: column; align-items: center; }
             .proposal-yes, .proposal-no { width: 100%; max-width: 300px; }
             .love-letter { padding: 40px 20px; }
+            .countdown-timer { font-size: 2rem; }
+            .countdown-value { font-size: 3rem; }
         }
 
         @media (max-width: 480px) {
             h1 { font-size: 2.8rem; }
             .subtitle { font-size: 1.2rem; }
             .qualities-container { grid-template-columns: 1fr; }
+            .countdown-timer { flex-wrap: wrap; gap: 15px; }
         }
     </style>
 </head>
@@ -468,6 +513,33 @@
             <i class="fas fa-chevron-down" style="font-size: 2rem; position: absolute; bottom: 30px;"></i>
         </div>
     </header>
+
+    <!-- Countdown Timer -->
+    <section id="countdown-section">
+        <div class="container">
+            <div class="countdown-container">
+                <div class="countdown-title">Time Until Our Forever Begins</div>
+                <div class="countdown-timer" id="countdown-timer">
+                    <div class="countdown-unit">
+                        <div class="countdown-value" id="days">00</div>
+                        <div class="countdown-label">Days</div>
+                    </div>
+                    <div class="countdown-unit">
+                        <div class="countdown-value" id="hours">00</div>
+                        <div class="countdown-label">Hours</div>
+                    </div>
+                    <div class="countdown-unit">
+                        <div class="countdown-value" id="minutes">00</div>
+                        <div class="countdown-label">Minutes</div>
+                    </div>
+                    <div class="countdown-unit">
+                        <div class="countdown-value" id="seconds">00</div>
+                        <div class="countdown-label">Seconds</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Progress Bar -->
     <section>
@@ -544,24 +616,15 @@
             </div>
             <div class="photos-container">
                 <div class="photo-item">
-                    <!-- Replace with your local photo -->
-                    <div style="width:100%; height:100%; background-color: #ffd1dc; display: flex; justify-content: center; align-items: center; font-size: 4rem; color: #a12c51;">
-                        <i class="fas fa-heart"></i>
-                    </div>
+                    <img src="img1.jpeg" alt="Our First Date" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?ixlib=rb-4.0.3&auto=format&fit=crop&w=1974&q=80'; this.alt='Our special memory';">
                     <div class="photo-caption">Our First Date</div>
                 </div>
                 <div class="photo-item">
-                    <!-- Replace with your local photo -->
-                    <div style="width:100%; height:100%; background-color: #c9e9ff; display: flex; justify-content: center; align-items: center; font-size: 4rem; color: #a12c51;">
-                        <i class="fas fa-smile"></i>
-                    </div>
+                    <img src="img2.jpeg" alt="That Time We Laughed Until We Cried" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1519225421980-715cb0215aed?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80'; this.alt='Our happy moment';">
                     <div class="photo-caption">That Time We Laughed Until We Cried</div>
                 </div>
                 <div class="photo-item">
-                    <!-- Replace with your local photo -->
-                    <div style="width:100%; height:100%; background-color: #d4edda; display: flex; justify-content: center; align-items: center; font-size: 4rem; color: #a12c51;">
-                        <i class="fas fa-star"></i>
-                    </div>
+                    <img src="img3.jpeg" alt="Our Favorite Adventure" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-4.0.3&auto=format&fit=crop&w=2069&q=80'; this.alt='Our adventure together';">
                     <div class="photo-caption">Our Favorite Adventure</div>
                 </div>
             </div>
@@ -583,7 +646,7 @@
                     <p>You are my everything, and now I want to ask you the most important question of my life...</p>
                 </div>
                 
-                <h2 style="font-size: 4rem; margin: 40px 0;">Will You Marry Me?</h2>
+                <h2 style="font-size: 4rem; margin: 40px 0;">Will You Marry Me, Nuzuu Alok?</h2>
                 
                 <div class="proposal-buttons">
                     <button class="proposal-yes" id="final-yes">YES! A Thousand Times Yes!</button>
@@ -628,7 +691,7 @@
     <footer>
         <div class="container">
             <p>Made with <i class="fas fa-heart" style="color: #ff4d6d;"></i> for the most amazing woman in the world</p>
-            <p>My love for you is eternal, Nuzuu</p>
+            <p>My love for you is eternal, Nuzuu Alok</p>
             <p>© <span id="current-year"></span> Forever Yours</p>
         </div>
     </footer>
@@ -636,6 +699,32 @@
     <script>
         // Set current year in footer
         document.getElementById('current-year').textContent = new Date().getFullYear();
+        
+        // Countdown Timer - Setting for 1 year from now
+        function updateCountdown() {
+            // Set the target date (1 year from now)
+            const targetDate = new Date();
+            targetDate.setFullYear(targetDate.getFullYear() + 1);
+            
+            const now = new Date().getTime();
+            const timeLeft = targetDate - now;
+            
+            if (timeLeft > 0) {
+                const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+                
+                document.getElementById('days').textContent = days.toString().padStart(2, '0');
+                document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+                document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+                document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+            }
+        }
+        
+        // Update countdown every second
+        setInterval(updateCountdown, 1000);
+        updateCountdown(); // Initial call
         
         // Game State
         let gameState = {
@@ -664,10 +753,27 @@
             const enteredName = nameInput.value.trim().toLowerCase();
             gameState.nameAttempts++;
             
-            // Check if she entered her last name
-            if (enteredName.includes('your-last-name-here')) { // Replace with your last name
+            // Check if she entered "Nuzuu Alok" or variations
+            const acceptedNames = [
+                "nuzuu alok",
+                "nuzuualok",
+                "alok nuzuu",
+                "nuzuu  alok",
+                "nuzu alok",
+                "nuzu alok"
+            ];
+            
+            let nameAccepted = false;
+            for (const name of acceptedNames) {
+                if (enteredName.includes(name)) {
+                    nameAccepted = true;
+                    break;
+                }
+            }
+            
+            if (nameAccepted) {
                 // Success - show next game
-                nameHint.textContent = "Perfect! That's exactly what I wanted to hear!";
+                nameHint.textContent = "Perfect! Nuzuu Alok... that sounds beautiful!";
                 nameHint.classList.add('show');
                 nameInput.disabled = true;
                 nameSubmit.disabled = true;
@@ -686,12 +792,12 @@
                     nameHint.classList.add('show');
                     nameInput.value = '';
                 } else if (gameState.nameAttempts >= 2) {
-                    nameHint.textContent = "Maybe try my last name instead? ;)";
+                    nameHint.textContent = "Maybe try entering your future name? Nuzuu Alok? ;)";
                     nameHint.classList.add('show');
                     
                     // After 2 attempts, let her proceed anyway
                     setTimeout(() => {
-                        nameHint.textContent = "Okay, I'll let you through... but remember this hint!";
+                        nameHint.textContent = "Okay, I'll let you through... but remember: Nuzuu Alok!";
                         nameInput.disabled = true;
                         nameSubmit.disabled = true;
                         
@@ -708,6 +814,13 @@
             updateProgress();
         });
         
+        // Allow Enter key to submit name
+        nameInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                nameSubmit.click();
+            }
+        });
+        
         // Game 2: Qualities Selection
         const qualities = [
             { text: "Makes you laugh every day", good: true },
@@ -719,12 +832,12 @@
             { text: "Shares your dreams", good: true },
             { text: "Loves you unconditionally", good: true },
             { text: "Your perfect partner", good: true },
-            { text: "Forgets important dates", good: bad: true },
-            { text: "Hogs the blanket", good: bad: true },
-            { text: "Always late", good: bad: true },
-            { text: "Terrible at cooking", good: bad: true },
-            { text: "Snores loudly", good: bad: true },
-            { text: "Leaves socks everywhere", good: bad: true }
+            { text: "Forgets important dates", good: false },
+            { text: "Hogs the blanket", good: false },
+            { text: "Always late", good: false },
+            { text: "Terrible at cooking", good: false },
+            { text: "Snores loudly", good: false },
+            { text: "Leaves socks everywhere", good: false }
         ];
         
         const qualitiesContainer = document.getElementById('qualities-container');
@@ -769,6 +882,7 @@
                 // Enable submit button if all good qualities selected
                 if (gameState.selectedQualities >= gameState.totalGoodQualities) {
                     qualitiesSubmit.disabled = false;
+                    qualitiesSubmit.innerHTML = '<i class="fas fa-heart"></i> Continue to Next Challenge <i class="fas fa-heart"></i>';
                 }
                 
                 updateProgress();
@@ -815,7 +929,7 @@
             option.addEventListener('click', function() {
                 if (competitor.correct) {
                     // Correct choice - proceed
-                    competitionHint.textContent = "Perfect choice! Of course it's you, my love!";
+                    competitionHint.textContent = "Perfect choice! Of course it's you, my beautiful Nuzuu!";
                     competitionHint.classList.add('show');
                     
                     // Show photos section after delay
@@ -871,6 +985,9 @@
             // Create celebration
             createCelebration();
             
+            // Update footer with married name
+            document.querySelector('footer p:nth-child(2)').textContent = "My love for you is eternal, Mrs. Nuzuu Alok";
+            
             // Scroll to letter
             setTimeout(() => {
                 document.getElementById('love-letter').scrollIntoView({ behavior: 'smooth' });
@@ -894,6 +1011,7 @@
                 if (noClickCount >= 5) {
                     finalYes.style.transform = 'scale(1.5)';
                     finalYes.style.backgroundColor = '#ff5722';
+                    finalYes.innerHTML = '<i class="fas fa-heart"></i> YES! PLEASE SAY YES! <i class="fas fa-heart"></i>';
                 }
                 
                 if (noClickCount >= noMessages.length - 1) {
@@ -945,6 +1063,25 @@
                 }, i * 50);
             }
             
+            // Create "She Said Yes!" message
+            setTimeout(() => {
+                const message = document.createElement('div');
+                message.innerHTML = '<h1 style="color: #ff4d6d; font-family: \'Dancing Script\', cursive; font-size: 5rem; text-align: center;">SHE SAID YES!</h1>';
+                message.style.position = 'fixed';
+                message.style.top = '50%';
+                message.style.left = '50%';
+                message.style.transform = 'translate(-50%, -50%)';
+                message.style.zIndex = '10000';
+                message.style.pointerEvents = 'none';
+                message.style.animation = 'heartbeat 2s infinite';
+                document.body.appendChild(message);
+                
+                // Remove message after 5 seconds
+                setTimeout(() => {
+                    message.remove();
+                }, 5000);
+            }, 1000);
+            
             // Remove celebration element after animation
             setTimeout(() => {
                 celebration.remove();
@@ -954,13 +1091,30 @@
         // Initialize
         updateProgress();
         
-        // Replace the placeholder images with your actual photos:
-        // 1. Save your photos in the same folder as this HTML file
-        // 2. Replace the divs in the "Our Photos" section with actual img tags:
-        //    Example: <img src="our-first-date.jpg" alt="Our First Date">
-        // 3. Update the photo captions to match your memories
+        // Smooth scrolling for navigation
+        window.addEventListener('scroll', function() {
+            const scrollPosition = window.scrollY;
+            const header = document.querySelector('header');
+            
+            // Parallax effect for header
+            header.style.backgroundPositionY = scrollPosition * 0.5 + 'px';
+        });
         
-        // Replace "your-last-name-here" in the name game with your actual last name
+        // Image fallback handler
+        function handleImageError(img) {
+            console.log("Image failed to load: " + img.src);
+            // The onerror attribute in the HTML already handles this
+        }
+        
+        // Preload images to ensure they're ready
+        const imageUrls = ['img1.jpeg', 'img2.jpeg', 'img3.jpeg'];
+        imageUrls.forEach(url => {
+            const img = new Image();
+            img.src = url;
+            img.onerror = function() {
+                console.log("Could not load image: " + url);
+            };
+        });
     </script>
 </body>
 </html>
