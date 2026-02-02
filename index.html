@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For My Love, Nuzuu 💖</title>
+    <title>For My Love, Nuzuu</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -12,67 +14,301 @@
         }
 
         body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 20px;
+            font-family: 'Raleway', sans-serif;
+            line-height: 1.6;
             color: #333;
+            background-color: #fff9fb;
             overflow-x: hidden;
         }
 
         .container {
-            max-width: 800px;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            padding: 40px 30px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-            margin: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), 
+                        url('https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        .header-content {
+            animation: fadeIn 2s ease-in-out;
         }
 
         h1 {
-            color: #ff6b8b;
-            font-size: 3.5rem;
-            margin-bottom: 20px;
-            font-family: 'Georgia', serif;
+            font-family: 'Dancing Script', cursive;
+            font-size: 5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
         }
 
-        .heart {
-            color: #ff6b8b;
+        .subtitle {
+            font-size: 1.8rem;
+            font-weight: 300;
+            margin-bottom: 30px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .heart-icon {
+            color: #ff4d6d;
             font-size: 2.5rem;
             margin: 20px 0;
             animation: heartbeat 1.5s infinite;
         }
 
-        .message {
-            font-size: 1.4rem;
-            line-height: 1.8;
-            margin: 30px 0;
+        /* Section styling */
+        section {
+            padding: 100px 0;
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 50px;
+            color: #a12c51;
+        }
+
+        /* Game Sections */
+        .game-section {
+            background-color: #fff0f5;
+            border-radius: 20px;
+            padding: 60px 40px;
+            margin: 40px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .game-instructions {
+            text-align: center;
+            font-size: 1.3rem;
+            margin-bottom: 40px;
             color: #555;
         }
 
-        .proposal-box {
-            margin: 40px auto;
-            padding: 30px;
-            background: linear-gradient(135deg, #ffd6e7 0%, #ffc2d1 100%);
-            border-radius: 15px;
-            border: 3px solid #ff8fab;
-            max-width: 600px;
+        /* Game 1: Name Input */
+        .name-game {
+            text-align: center;
         }
 
-        .question {
-            font-size: 2.2rem;
-            color: #ff4d6d;
-            margin-bottom: 30px;
+        .name-input {
+            padding: 15px 25px;
+            font-size: 1.3rem;
+            width: 100%;
+            max-width: 500px;
+            border: 2px solid #ff4d6d;
+            border-radius: 50px;
+            margin: 20px 0;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .name-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 77, 109, 0.3);
+        }
+
+        .submit-btn {
+            background-color: #ff4d6d;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.3rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            background-color: #ff3357;
+            transform: scale(1.05);
+        }
+
+        .hint {
+            margin-top: 20px;
+            font-style: italic;
+            color: #a12c51;
+            font-size: 1.2rem;
+            min-height: 30px;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .hint.show {
+            opacity: 1;
+        }
+
+        /* Game 2: Qualities Selection */
+        .qualities-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .quality-option {
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+            font-size: 1.2rem;
+            font-weight: 500;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .quality-option:hover {
+            transform: translateY(-5px);
+        }
+
+        .quality-option.selected {
+            background-color: #4CAF50;
+            color: white;
+            border-color: #388E3C;
+        }
+
+        .quality-option.bad {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .quality-option.bad.selected {
+            background-color: #f44336;
+            color: white;
+            border-color: #d32f2f;
+            animation: shake 0.5s;
+        }
+
+        /* Game 3: Best Person Competition */
+        .competition-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .competition-option {
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            position: relative;
+            height: 250px;
+        }
+
+        .competition-option img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .competition-option:hover img {
+            transform: scale(1.05);
+        }
+
+        .competition-option.correct {
+            border: 5px solid #4CAF50;
+        }
+
+        .competition-option.wrong {
+            animation: vibrate 0.5s;
+            border: 5px solid #f44336;
+        }
+
+        .option-label {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 10px;
+            text-align: center;
             font-weight: bold;
         }
 
-        .buttons {
+        /* Our Photos Section */
+        .photos-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .photo-item {
+            border-radius: 15px;
+            overflow: hidden;
+            height: 350px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            position: relative;
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .photo-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .photo-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            color: white;
+            padding: 20px;
+            font-size: 1.2rem;
+        }
+
+        /* Proposal Section */
+        .proposal-section {
+            background: linear-gradient(rgba(161, 44, 81, 0.9), rgba(161, 44, 81, 0.8)), 
+                        url('https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            border-radius: 20px;
+            margin: 40px 0;
+        }
+
+        .proposal-section h2 {
+            color: white;
+        }
+
+        .proposal-text {
+            max-width: 800px;
+            margin: 0 auto 50px;
+            font-size: 1.3rem;
+            line-height: 1.8;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 10px;
+            backdrop-filter: blur(5px);
+        }
+
+        .proposal-buttons {
             display: flex;
             justify-content: center;
             gap: 30px;
@@ -80,88 +316,95 @@
             flex-wrap: wrap;
         }
 
-        button {
-            padding: 18px 45px;
-            font-size: 1.5rem;
+        .proposal-yes {
+            background-color: #4CAF50;
+            color: white;
             border: none;
+            padding: 25px 60px;
+            font-size: 1.8rem;
+            font-family: 'Playfair Display', serif;
             border-radius: 50px;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-weight: bold;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            min-width: 180px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
         }
 
-        #yesBtn {
-            background: linear-gradient(135deg, #4CAF50, #45a049);
+        .proposal-no {
+            background-color: #f44336;
             color: white;
+            border: none;
+            padding: 25px 60px;
+            font-size: 1.8rem;
+            font-family: 'Playfair Display', serif;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
             position: relative;
-            z-index: 10;
         }
 
-        #noBtn {
-            background: linear-gradient(135deg, #ff4d4d, #ff3333);
-            color: white;
-            position: absolute;
-            z-index: 5;
+        .proposal-yes:hover {
+            background-color: #45a049;
+            transform: scale(1.05);
         }
 
-        #yesBtn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
+        .proposal-no:hover {
+            background-color: #d32f2f;
+            transform: scale(1.05);
         }
 
-        #message {
-            margin-top: 20px;
-            font-style: italic;
-            color: #666;
-            height: 30px;
-            font-size: 1.1rem;
-        }
-
-        .ring {
-            font-size: 4rem;
-            margin: 20px 0;
-            animation: spin 4s linear infinite;
-        }
-
-        .result {
+        /* Love Letter */
+        .love-letter {
+            background-color: white;
+            border-radius: 20px;
+            padding: 60px;
+            margin: 60px 0;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
             display: none;
-            margin-top: 40px;
-            padding: 30px;
-            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-            border-radius: 15px;
+        }
+
+        .love-letter.show {
+            display: block;
             animation: fadeIn 1s ease;
         }
 
-        .result h2 {
-            color: #ff4d6d;
-            font-size: 2.8rem;
-            margin-bottom: 20px;
+        .letter-content {
+            font-size: 1.3rem;
+            line-height: 1.9;
+            max-width: 800px;
+            margin: 0 auto;
         }
 
-        .result p {
-            font-size: 1.6rem;
-            color: #444;
-            margin: 10px 0;
+        .letter-signature {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5rem;
+            text-align: right;
+            margin-top: 50px;
+            color: #a12c51;
         }
 
-        .floating-hearts {
-            position: fixed;
-            top: 0;
-            left: 0;
+        /* Progress Bar */
+        .progress-container {
             width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
+            background-color: #f0f0f0;
+            border-radius: 50px;
+            margin: 40px 0;
+            height: 20px;
+            overflow: hidden;
         }
 
-        .floating-heart {
-            position: absolute;
-            font-size: 24px;
-            color: #ff6b8b;
-            opacity: 0;
-            animation: float 8s linear infinite;
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #ff4d6d, #a12c51);
+            border-radius: 50px;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         @keyframes heartbeat {
@@ -170,347 +413,554 @@
             100% { transform: scale(1); }
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes vibrate {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-5px) rotate(-1deg); }
+            40% { transform: translateX(5px) rotate(1deg); }
+            60% { transform: translateX(-5px) rotate(-1deg); }
+            80% { transform: translateX(5px) rotate(1deg); }
         }
 
-        @keyframes float {
-            0% {
-                transform: translateY(100vh) rotate(0deg);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-100px) rotate(360deg);
-                opacity: 0;
-            }
+        @keyframes floatAway {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(var(--move-x), var(--move-y)) scale(0.8); opacity: 0; }
         }
 
+        /* Responsive */
         @media (max-width: 768px) {
-            h1 { font-size: 2.5rem; }
-            .question { font-size: 1.8rem; }
-            button { padding: 15px 35px; font-size: 1.3rem; min-width: 150px; }
-            .container { padding: 30px 20px; }
+            h1 { font-size: 3.5rem; }
+            h2 { font-size: 2.5rem; }
+            .subtitle { font-size: 1.5rem; }
+            section { padding: 60px 0; }
+            .game-section { padding: 40px 20px; }
+            .qualities-container { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+            .competition-container { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+            .proposal-buttons { flex-direction: column; align-items: center; }
+            .proposal-yes, .proposal-no { width: 100%; max-width: 300px; }
+            .love-letter { padding: 40px 20px; }
         }
 
         @media (max-width: 480px) {
-            h1 { font-size: 2rem; }
-            .question { font-size: 1.5rem; }
-            .message { font-size: 1.2rem; }
-            .buttons { flex-direction: column; align-items: center; }
-            button { width: 100%; max-width: 250px; }
+            h1 { font-size: 2.8rem; }
+            .subtitle { font-size: 1.2rem; }
+            .qualities-container { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
-    <div class="floating-hearts" id="floatingHearts"></div>
-    
-    <div class="container">
-        <h1>For My Dearest Nuzuu 💖</h1>
-        
-        <div class="heart">❤️</div>
-        
-        <div class="message">
-            My darling Nuzuu, from the moment we met, you've filled my life with joy, laughter, and love beyond measure. Every day with you feels like a beautiful dream.
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <h1>My Dearest Nuzuu</h1>
+            <div class="heart-icon">
+                <i class="fas fa-heart"></i>
+            </div>
+            <p class="subtitle">This journey is just for you, my love</p>
+            <p class="subtitle">Complete the challenges to discover my question</p>
         </div>
-        
-        <div class="proposal-box">
-            <div class="ring">💍</div>
-            <div class="question">Will you make me the happiest person and marry me?</div>
-            
-            <div class="buttons">
-                <button id="yesBtn">YES! 💖</button>
-                <div style="position: relative; width: 180px; height: 60px;">
-                    <button id="noBtn">No</button>
+        <div class="scroll-indicator">
+            <i class="fas fa-chevron-down" style="font-size: 2rem; position: absolute; bottom: 30px;"></i>
+        </div>
+    </header>
+
+    <!-- Progress Bar -->
+    <section>
+        <div class="container">
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            <p style="text-align: center; font-size: 1.2rem; color: #a12c51;">Complete all challenges to unlock the final question</p>
+        </div>
+    </section>
+
+    <!-- Game 1: Name Input -->
+    <section>
+        <div class="container">
+            <div class="game-section">
+                <h2>Challenge 1: What's In A Name?</h2>
+                <div class="game-instructions">
+                    <p>To begin our journey, please enter your full name below.</p>
+                    <p><em>But be careful... there might be a twist!</em></p>
+                </div>
+                <div class="name-game">
+                    <input type="text" class="name-input" id="name-input" placeholder="Enter your full name">
+                    <br>
+                    <button class="submit-btn" id="name-submit">Submit Name</button>
+                    <div class="hint" id="name-hint"></div>
                 </div>
             </div>
-            
-            <div id="message">Try to click the No button if you can! 😉</div>
         </div>
-        
-        <div class="result" id="result">
-            <h2>Nuzuu said YES! 🎉</h2>
-            <p>My love, you've made me the happiest person in the world! 💕</p>
-            <p>Today marks the beginning of our forever together. 💑</p>
-            <p>I promise to love you, cherish you, and stand by you always. ❤️</p>
-            <div class="heart" style="margin-top: 20px;">💖💖💖</div>
+    </section>
+
+    <!-- Game 2: Qualities Selection -->
+    <section id="game-2" style="display: none;">
+        <div class="container">
+            <div class="game-section">
+                <h2>Challenge 2: Why Should I Date You?</h2>
+                <div class="game-instructions">
+                    <p>Select all the qualities that make you an amazing partner.</p>
+                    <p>But beware - some choices might disappear if they're not good enough!</p>
+                    <p id="quality-counter">Selected: 0/9 good qualities</p>
+                </div>
+                <div class="qualities-container" id="qualities-container">
+                    <!-- Qualities will be added by JavaScript -->
+                </div>
+                <div style="text-align: center; margin-top: 40px;">
+                    <button class="submit-btn" id="qualities-submit" disabled>Continue</button>
+                </div>
+            </div>
         </div>
-    </div>
+    </section>
+
+    <!-- Game 3: Best Person Competition -->
+    <section id="game-3" style="display: none;">
+        <div class="container">
+            <div class="game-section">
+                <h2>Challenge 3: Best Person in the World Competition</h2>
+                <div class="game-instructions">
+                    <p>Choose the best person in the world from the options below.</p>
+                    <p><em>Hint: Pick the one who makes my world complete</em></p>
+                </div>
+                <div class="competition-container" id="competition-container">
+                    <!-- Competition options will be added by JavaScript -->
+                </div>
+                <div class="hint" id="competition-hint"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Photos -->
+    <section id="our-photos" style="display: none;">
+        <div class="container">
+            <h2>Our Beautiful Memories</h2>
+            <div class="game-instructions">
+                <p>Before we continue, let's take a moment to remember some of our favorite moments together.</p>
+            </div>
+            <div class="photos-container">
+                <div class="photo-item">
+                    <!-- Replace with your local photo -->
+                    <div style="width:100%; height:100%; background-color: #ffd1dc; display: flex; justify-content: center; align-items: center; font-size: 4rem; color: #a12c51;">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <div class="photo-caption">Our First Date</div>
+                </div>
+                <div class="photo-item">
+                    <!-- Replace with your local photo -->
+                    <div style="width:100%; height:100%; background-color: #c9e9ff; display: flex; justify-content: center; align-items: center; font-size: 4rem; color: #a12c51;">
+                        <i class="fas fa-smile"></i>
+                    </div>
+                    <div class="photo-caption">That Time We Laughed Until We Cried</div>
+                </div>
+                <div class="photo-item">
+                    <!-- Replace with your local photo -->
+                    <div style="width:100%; height:100%; background-color: #d4edda; display: flex; justify-content: center; align-items: center; font-size: 4rem; color: #a12c51;">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="photo-caption">Our Favorite Adventure</div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 40px;">
+                <button class="submit-btn" id="photos-continue">Continue to Final Challenge</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final Proposal -->
+    <section id="final-proposal" style="display: none;">
+        <div class="container">
+            <div class="proposal-section">
+                <h2>The Final Question</h2>
+                <div class="proposal-text">
+                    <p>My darling Nuzuu, you've completed every challenge, proven your amazing qualities, and shown me once again why you're the best person in my world.</p>
+                    <p>Every day with you is a blessing. You've filled my life with so much joy, love, and happiness that I can't imagine a single day without you.</p>
+                    <p>You are my sunrise and my sunset, my today and my tomorrow. I want to wake up next to you every morning and fall asleep holding you every night for the rest of my life.</p>
+                    <p>You are my everything, and now I want to ask you the most important question of my life...</p>
+                </div>
+                
+                <h2 style="font-size: 4rem; margin: 40px 0;">Will You Marry Me?</h2>
+                
+                <div class="proposal-buttons">
+                    <button class="proposal-yes" id="final-yes">YES! A Thousand Times Yes!</button>
+                    <button class="proposal-no" id="final-no">No</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Love Letter -->
+    <section id="love-letter" style="display: none;">
+        <div class="container">
+            <div class="love-letter" id="letter-content">
+                <div class="letter-content">
+                    <p>My Dearest Nuzuu,</p>
+                    
+                    <p>From the moment I met you, I knew there was something special about you. The way you laugh, the way your eyes light up when you talk about things you love, the kindness you show to everyone around you - you captured my heart completely.</p>
+                    
+                    <p>Every day with you feels like a beautiful dream. You've brought so much light into my life, filled it with laughter, and shown me what true love really means. You're not just my partner; you're my best friend, my confidant, and the person I want to share every moment with.</p>
+                    
+                    <p>I remember our first date, our inside jokes, the way you make me feel like I can conquer the world just by having you by my side. I cherish every memory we've created together and look forward to all the adventures that await us.</p>
+                    
+                    <p>You are the most amazing person I've ever known - strong, beautiful, intelligent, and with a heart of gold. You inspire me to be a better person every single day.</p>
+                    
+                    <p>Today, as you read this, I want you to know that my love for you is endless and eternal. I promise to stand by your side through all of life's adventures, to support your dreams, to make you laugh every day, and to love you more with each passing moment.</p>
+                    
+                    <p>Thank you for saying yes. Thank you for choosing me. Thank you for being you.</p>
+                    
+                    <p>I cannot wait to spend the rest of my life with you, creating countless more beautiful memories together.</p>
+                    
+                    <p>All my love, forever and always,</p>
+                    
+                    <div class="letter-signature">
+                        Your Future Husband
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>Made with <i class="fas fa-heart" style="color: #ff4d6d;"></i> for the most amazing woman in the world</p>
+            <p>My love for you is eternal, Nuzuu</p>
+            <p>© <span id="current-year"></span> Forever Yours</p>
+        </div>
+    </footer>
 
     <script>
-        // Create floating hearts
-        function createFloatingHearts() {
-            const container = document.getElementById('floatingHearts');
-            for (let i = 0; i < 30; i++) {
-                const heart = document.createElement('div');
-                heart.className = 'floating-heart';
-                heart.innerHTML = '❤️';
-                heart.style.left = Math.random() * 100 + 'vw';
-                heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
-                heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
-                heart.style.animationDelay = Math.random() * 5 + 's';
-                container.appendChild(heart);
-            }
+        // Set current year in footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+        
+        // Game State
+        let gameState = {
+            nameAttempts: 0,
+            selectedQualities: 0,
+            totalGoodQualities: 9,
+            gameCompleted: false
+        };
+        
+        // Update progress bar
+        function updateProgress() {
+            const progress = (gameState.nameAttempts >= 2 ? 25 : 0) + 
+                           (gameState.selectedQualities >= 9 ? 25 : 0) + 
+                           (document.getElementById('game-3').style.display !== 'none' ? 25 : 0) +
+                           (document.getElementById('our-photos').style.display !== 'none' ? 25 : 0);
+            
+            document.getElementById('progress-bar').style.width = progress + '%';
         }
         
-        // Array of funny messages for the No button
-        const messages = [
-            "Try to catch me if you can!",
-            "I'm too quick for you!",
-            "Not so fast!",
-            "You'll have to be quicker!",
-            "Missed me!",
-            "I'm a slippery one!",
-            "Almost got me!",
-            "Too slow!",
-            "You can't catch me!",
-            "I'm like a butterfly!",
-            "Maybe next time!",
-            "Nope, not today!",
-            "You'll have to try harder!",
-            "I'm too smart for that!",
-            "Catch me if you can!",
-            "You're getting closer!",
-            "So close yet so far!",
-            "Almost had me there!",
-            "I'm a moving target!",
-            "You're persistent, I'll give you that!"
+        // Game 1: Name Input
+        const nameInput = document.getElementById('name-input');
+        const nameSubmit = document.getElementById('name-submit');
+        const nameHint = document.getElementById('name-hint');
+        
+        nameSubmit.addEventListener('click', function() {
+            const enteredName = nameInput.value.trim().toLowerCase();
+            gameState.nameAttempts++;
+            
+            // Check if she entered her last name
+            if (enteredName.includes('your-last-name-here')) { // Replace with your last name
+                // Success - show next game
+                nameHint.textContent = "Perfect! That's exactly what I wanted to hear!";
+                nameHint.classList.add('show');
+                nameInput.disabled = true;
+                nameSubmit.disabled = true;
+                
+                // Show Game 2 after delay
+                setTimeout(() => {
+                    document.getElementById('game-2').style.display = 'block';
+                    updateProgress();
+                    // Scroll to Game 2
+                    document.getElementById('game-2').scrollIntoView({ behavior: 'smooth' });
+                }, 1500);
+            } else {
+                // Wrong name
+                if (gameState.nameAttempts === 1) {
+                    nameHint.textContent = "Hmm, that doesn't seem quite right...";
+                    nameHint.classList.add('show');
+                    nameInput.value = '';
+                } else if (gameState.nameAttempts >= 2) {
+                    nameHint.textContent = "Maybe try my last name instead? ;)";
+                    nameHint.classList.add('show');
+                    
+                    // After 2 attempts, let her proceed anyway
+                    setTimeout(() => {
+                        nameHint.textContent = "Okay, I'll let you through... but remember this hint!";
+                        nameInput.disabled = true;
+                        nameSubmit.disabled = true;
+                        
+                        // Show Game 2 after delay
+                        setTimeout(() => {
+                            document.getElementById('game-2').style.display = 'block';
+                            updateProgress();
+                            document.getElementById('game-2').scrollIntoView({ behavior: 'smooth' });
+                        }, 2000);
+                    }, 2000);
+                }
+            }
+            
+            updateProgress();
+        });
+        
+        // Game 2: Qualities Selection
+        const qualities = [
+            { text: "Makes you laugh every day", good: true },
+            { text: "Always supportive", good: true },
+            { text: "Beautiful smile", good: true },
+            { text: "Kind heart", good: true },
+            { text: "Your best friend", good: true },
+            { text: "Makes you a better person", good: true },
+            { text: "Shares your dreams", good: true },
+            { text: "Loves you unconditionally", good: true },
+            { text: "Your perfect partner", good: true },
+            { text: "Forgets important dates", good: bad: true },
+            { text: "Hogs the blanket", good: bad: true },
+            { text: "Always late", good: bad: true },
+            { text: "Terrible at cooking", good: bad: true },
+            { text: "Snores loudly", good: bad: true },
+            { text: "Leaves socks everywhere", good: bad: true }
         ];
         
-        let attemptCount = 0;
-        const noBtn = document.getElementById('noBtn');
-        const messageDiv = document.getElementById('message');
-        const yesBtn = document.getElementById('yesBtn');
-        const resultDiv = document.getElementById('result');
+        const qualitiesContainer = document.getElementById('qualities-container');
+        const qualityCounter = document.getElementById('quality-counter');
+        const qualitiesSubmit = document.getElementById('qualities-submit');
         
-        // Function to move the No button
-        function moveNoButton() {
-            const container = document.querySelector('.proposal-box');
-            const containerRect = container.getBoundingClientRect();
-            const buttonWidth = noBtn.offsetWidth;
-            const buttonHeight = noBtn.offsetHeight;
+        // Create quality buttons
+        qualities.forEach(quality => {
+            const button = document.createElement('div');
+            button.className = `quality-option ${quality.good ? '' : 'bad'}`;
+            button.textContent = quality.text;
+            button.dataset.good = quality.good;
             
-            // Calculate new position within container
-            const maxX = containerRect.width - buttonWidth - 40;
-            const maxY = containerRect.height - buttonHeight - 40;
+            button.addEventListener('click', function() {
+                if (button.classList.contains('selected')) {
+                    // Deselect
+                    button.classList.remove('selected');
+                    if (quality.good) {
+                        gameState.selectedQualities--;
+                    }
+                } else {
+                    // Select
+                    if (quality.good) {
+                        button.classList.add('selected');
+                        gameState.selectedQualities++;
+                    } else {
+                        // Bad quality - shake and disappear
+                        button.classList.add('selected');
+                        setTimeout(() => {
+                            button.style.opacity = '0';
+                            button.style.transform = 'scale(0)';
+                            setTimeout(() => {
+                                button.style.display = 'none';
+                            }, 300);
+                        }, 500);
+                    }
+                }
+                
+                // Update counter
+                qualityCounter.textContent = `Selected: ${gameState.selectedQualities}/${gameState.totalGoodQualities} good qualities`;
+                
+                // Enable submit button if all good qualities selected
+                if (gameState.selectedQualities >= gameState.totalGoodQualities) {
+                    qualitiesSubmit.disabled = false;
+                }
+                
+                updateProgress();
+            });
             
-            const randomX = Math.random() * maxX;
-            const randomY = Math.random() * maxY;
-            
-            // Apply the new position with animation
-            noBtn.style.transition = 'all 0.4s ease';
-            noBtn.style.left = `${randomX}px`;
-            noBtn.style.top = `${randomY}px`;
-            
-            // Change the message
-            attemptCount++;
-            messageDiv.textContent = messages[attemptCount % messages.length];
-            
-            // Make button smaller as attempts increase
-            const scale = Math.max(0.7, 1 - (attemptCount * 0.05));
-            noBtn.style.transform = `scale(${scale})`;
-            
-            // Change color as attempts increase
-            const redValue = Math.max(100, 255 - (attemptCount * 10));
-            noBtn.style.background = `linear-gradient(135deg, rgb(${redValue}, 50, 50), rgb(${redValue-30}, 30, 30))`;
-            
-            // After many attempts, encourage clicking Yes
-            if (attemptCount > 8) {
-                messageDiv.textContent = "Maybe you should try the YES button instead?";
-            }
-            if (attemptCount > 12) {
-                messageDiv.textContent = "The YES button doesn't move, you know...";
-            }
-            if (attemptCount > 15) {
-                messageDiv.textContent = "Okay, I surrender! Click YES already!";
-                // Make button stop moving temporarily
-                noBtn.style.pointerEvents = 'none';
-                noBtn.style.opacity = '0.5';
-                setTimeout(() => {
-                    noBtn.style.pointerEvents = 'auto';
-                    noBtn.style.opacity = '1';
-                }, 2000);
-            }
-        }
-        
-        // Add event listeners to make No button move
-        noBtn.addEventListener('mouseenter', moveNoButton);
-        noBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            moveNoButton();
-            
-            // Create a little sparkle effect when clicked
-            createSparkle(e.clientX, e.clientY);
-            return false;
+            qualitiesContainer.appendChild(button);
         });
         
-        // Also move button when cursor gets close
-        document.addEventListener('mousemove', function(e) {
-            const rect = noBtn.getBoundingClientRect();
-            const cursorX = e.clientX;
-            const cursorY = e.clientY;
-            
-            // Calculate distance between cursor and button center
-            const btnCenterX = rect.left + rect.width / 2;
-            const btnCenterY = rect.top + rect.height / 2;
-            const distance = Math.sqrt(
-                Math.pow(cursorX - btnCenterX, 2) + 
-                Math.pow(cursorY - btnCenterY, 2)
-            );
-            
-            // Move button if cursor is within 100px
-            if (distance < 100 && Math.random() > 0.7) {
-                moveNoButton();
-            }
+        qualitiesSubmit.addEventListener('click', function() {
+            // Show Game 3
+            document.getElementById('game-3').style.display = 'block';
+            updateProgress();
+            document.getElementById('game-3').scrollIntoView({ behavior: 'smooth' });
         });
         
-        // Yes button click handler
-        yesBtn.addEventListener('click', function() {
-            // Show the result
-            resultDiv.style.display = 'block';
+        // Game 3: Best Person Competition
+        const competitionContainer = document.getElementById('competition-container');
+        const competitionHint = document.getElementById('competition-hint');
+        
+        const competitors = [
+            { name: "Nuzuu", correct: true, emoji: "👸" },
+            { name: "A Duck", correct: false, emoji: "🦆" },
+            { name: "Darth Vader", correct: false, emoji: "😈" },
+            { name: "Random Celebrity", correct: false, emoji: "🌟" },
+            { name: "A Cute Puppy", correct: false, emoji: "🐶" },
+            { name: "A Funny Meme", correct: false, emoji: "😂" }
+        ];
+        
+        // Create competition options
+        competitors.forEach(competitor => {
+            const option = document.createElement('div');
+            option.className = 'competition-option';
+            if (competitor.correct) {
+                option.classList.add('correct');
+            }
             
-            // Hide the proposal box
-            document.querySelector('.proposal-box').style.display = 'none';
+            option.innerHTML = `
+                <div style="width:100%; height:100%; background-color: ${competitor.correct ? '#ffd1dc' : '#f0f0f0'}; display: flex; justify-content: center; align-items: center; font-size: 5rem;">
+                    ${competitor.emoji}
+                </div>
+                <div class="option-label">${competitor.name}</div>
+            `;
             
-            // Create celebration effect
+            option.addEventListener('click', function() {
+                if (competitor.correct) {
+                    // Correct choice - proceed
+                    competitionHint.textContent = "Perfect choice! Of course it's you, my love!";
+                    competitionHint.classList.add('show');
+                    
+                    // Show photos section after delay
+                    setTimeout(() => {
+                        document.getElementById('our-photos').style.display = 'block';
+                        updateProgress();
+                        document.getElementById('our-photos').scrollIntoView({ behavior: 'smooth' });
+                    }, 1500);
+                } else {
+                    // Wrong choice - vibrate
+                    option.classList.add('wrong');
+                    competitionHint.textContent = "Try again! Pick the person who makes my heart skip a beat!";
+                    competitionHint.classList.add('show');
+                    
+                    // Remove vibration class after animation
+                    setTimeout(() => {
+                        option.classList.remove('wrong');
+                    }, 500);
+                }
+            });
+            
+            competitionContainer.appendChild(option);
+        });
+        
+        // Photos continue button
+        document.getElementById('photos-continue').addEventListener('click', function() {
+            document.getElementById('final-proposal').style.display = 'block';
+            updateProgress();
+            document.getElementById('final-proposal').scrollIntoView({ behavior: 'smooth' });
+        });
+        
+        // Final Proposal
+        const finalYes = document.getElementById('final-yes');
+        const finalNo = document.getElementById('final-no');
+        const noMessages = [
+            "What?",
+            "Why?",
+            "Are you sure?",
+            "I thought you loved me ;(",
+            "Please reconsider!",
+            "My heart is breaking!",
+            "I'll never give up!",
+            "Just say yes already!",
+            "OKAY FINE! I'LL SAY YES!"
+        ];
+        let noClickCount = 0;
+        
+        finalYes.addEventListener('click', function() {
+            // Show love letter
+            document.getElementById('love-letter').style.display = 'block';
+            document.getElementById('letter-content').classList.add('show');
+            
+            // Create celebration
             createCelebration();
             
-            // Change page title
-            document.title = "Nuzuu said YES! 💍";
-            
-            // Create more floating hearts
-            for (let i = 0; i < 50; i++) {
-                setTimeout(() => {
-                    createFloatingHeartCelebration();
-                }, i * 100);
-            }
+            // Scroll to letter
+            setTimeout(() => {
+                document.getElementById('love-letter').scrollIntoView({ behavior: 'smooth' });
+            }, 500);
         });
         
-        // Sparkle effect
-        function createSparkle(x, y) {
-            for (let i = 0; i < 5; i++) {
-                setTimeout(() => {
-                    const sparkle = document.createElement('div');
-                    sparkle.style.position = 'fixed';
-                    sparkle.style.left = (x - 10) + 'px';
-                    sparkle.style.top = (y - 10) + 'px';
-                    sparkle.style.width = '20px';
-                    sparkle.style.height = '20px';
-                    sparkle.style.background = 'radial-gradient(circle, #fff, #ff6b8b)';
-                    sparkle.style.borderRadius = '50%';
-                    sparkle.style.zIndex = '1000';
-                    sparkle.style.pointerEvents = 'none';
-                    document.body.appendChild(sparkle);
-                    
-                    // Animate sparkle
-                    const angle = Math.random() * Math.PI * 2;
-                    const distance = 30 + Math.random() * 40;
-                    const endX = x + Math.cos(angle) * distance;
-                    const endY = y + Math.sin(angle) * distance;
-                    
-                    sparkle.animate([
-                        { transform: 'translate(0, 0) scale(1)', opacity: 1 },
-                        { transform: `translate(${endX - x}px, ${endY - y}px) scale(0)`, opacity: 0 }
-                    ], {
-                        duration: 600 + Math.random() * 400,
-                        easing: 'ease-out'
-                    }).onfinish = () => sparkle.remove();
-                }, i * 50);
+        finalNo.addEventListener('click', function() {
+            if (noClickCount < noMessages.length) {
+                // Change button text
+                finalNo.textContent = noMessages[noClickCount];
+                noClickCount++;
+                
+                // Make button change colors
+                const colors = ['#f44336', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5', '#2196f3', '#00bcd4', '#009688', '#4caf50'];
+                finalNo.style.backgroundColor = colors[noClickCount % colors.length];
+                
+                // Make button bigger
+                finalNo.style.transform = `scale(${1 + (noClickCount * 0.1)})`;
+                
+                // After several clicks, force yes
+                if (noClickCount >= 5) {
+                    finalYes.style.transform = 'scale(1.5)';
+                    finalYes.style.backgroundColor = '#ff5722';
+                }
+                
+                if (noClickCount >= noMessages.length - 1) {
+                    // Force yes button
+                    finalNo.style.display = 'none';
+                    finalYes.textContent = "THE ONLY ANSWER IS YES!";
+                    finalYes.style.fontSize = '2.5rem';
+                    finalYes.style.padding = '30px 80px';
+                    finalYes.style.animation = 'heartbeat 1s infinite';
+                }
             }
-        }
+        });
         
         // Celebration effect
         function createCelebration() {
-            // Create big hearts explosion
-            for (let i = 0; i < 30; i++) {
+            const celebration = document.createElement('div');
+            celebration.style.position = 'fixed';
+            celebration.style.top = '0';
+            celebration.style.left = '0';
+            celebration.style.width = '100%';
+            celebration.style.height = '100%';
+            celebration.style.pointerEvents = 'none';
+            celebration.style.zIndex = '9999';
+            document.body.appendChild(celebration);
+            
+            // Create hearts
+            for (let i = 0; i < 100; i++) {
                 setTimeout(() => {
                     const heart = document.createElement('div');
-                    heart.innerHTML = '💖';
-                    heart.style.position = 'fixed';
-                    heart.style.left = '50%';
-                    heart.style.top = '50%';
-                    heart.style.fontSize = (Math.random() * 40 + 30) + 'px';
-                    heart.style.transform = 'translate(-50%, -50%)';
-                    heart.style.zIndex = '100';
-                    heart.style.opacity = '1';
-                    document.body.appendChild(heart);
+                    heart.innerHTML = '❤️';
+                    heart.style.position = 'absolute';
+                    heart.style.fontSize = Math.random() * 40 + 20 + 'px';
+                    heart.style.left = Math.random() * 100 + 'vw';
+                    heart.style.top = '100%';
+                    heart.style.opacity = '0.8';
+                    celebration.appendChild(heart);
                     
-                    // Animate heart outward
-                    const angle = Math.random() * Math.PI * 2;
-                    const distance = 200 + Math.random() * 300;
-                    const endX = window.innerWidth / 2 + Math.cos(angle) * distance;
-                    const endY = window.innerHeight / 2 + Math.sin(angle) * distance;
-                    
-                    heart.animate([
-                        { 
-                            transform: 'translate(-50%, -50%) scale(1)',
-                            opacity: 1
-                        },
-                        { 
-                            transform: `translate(${endX - window.innerWidth/2}px, ${endY - window.innerHeight/2}px) scale(0)`,
-                            opacity: 0
-                        }
+                    // Animate heart
+                    const animation = heart.animate([
+                        { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
+                        { transform: `translateY(-${window.innerHeight + 100}px) rotate(${Math.random() * 360}deg)`, opacity: 0 }
                     ], {
-                        duration: 1500 + Math.random() * 1000,
-                        easing: 'ease-out'
-                    }).onfinish = () => heart.remove();
-                }, i * 100);
+                        duration: Math.random() * 3000 + 2000,
+                        easing: 'cubic-bezier(0.215, 0.610, 0.355, 1)'
+                    });
+                    
+                    // Remove heart after animation
+                    animation.onfinish = () => heart.remove();
+                }, i * 50);
             }
-        }
-        
-        // Special floating hearts for celebration
-        function createFloatingHeartCelebration() {
-            const heart = document.createElement('div');
-            heart.innerHTML = '💖';
-            heart.style.position = 'fixed';
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.top = '100vh';
-            heart.style.fontSize = (Math.random() * 40 + 20) + 'px';
-            heart.style.zIndex = '10';
-            heart.style.opacity = '0.9';
-            document.body.appendChild(heart);
             
-            // Animate heart floating up
-            const animation = heart.animate([
-                { 
-                    transform: 'translateY(0) rotate(0deg)',
-                    opacity: 1
-                },
-                { 
-                    transform: `translateY(-120vh) rotate(${Math.random() * 360}deg)`,
-                    opacity: 0
-                }
-            ], {
-                duration: 3000 + Math.random() * 2000,
-                easing: 'cubic-bezier(0.215, 0.610, 0.355, 1)'
-            });
-            
-            animation.onfinish = () => heart.remove();
+            // Remove celebration element after animation
+            setTimeout(() => {
+                celebration.remove();
+            }, 6000);
         }
         
         // Initialize
-        createFloatingHearts();
+        updateProgress();
         
-        // Initial position for No button
-        moveNoButton();
+        // Replace the placeholder images with your actual photos:
+        // 1. Save your photos in the same folder as this HTML file
+        // 2. Replace the divs in the "Our Photos" section with actual img tags:
+        //    Example: <img src="our-first-date.jpg" alt="Our First Date">
+        // 3. Update the photo captions to match your memories
         
-        // Make button move occasionally on its own
-        setInterval(() => {
-            if (Math.random() > 0.8) {
-                moveNoButton();
-            }
-        }, 2000);
+        // Replace "your-last-name-here" in the name game with your actual last name
     </script>
 </body>
 </html>
