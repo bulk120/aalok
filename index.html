@@ -27,6 +27,49 @@
             padding: 0 20px;
         }
 
+        /* Music Controls */
+        .music-controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 15px;
+            border-radius: 50px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(5px);
+        }
+
+        .music-btn {
+            background: #ff4d6d;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .music-btn:hover {
+            background: #ff3357;
+            transform: scale(1.1);
+        }
+
+        .music-info {
+            font-size: 0.9rem;
+            color: #a12c51;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
         /* Header */
         header {
             height: 100vh;
@@ -475,6 +518,36 @@
             margin-top: 5px;
         }
 
+        /* Volume Slider */
+        .volume-slider {
+            width: 100px;
+            height: 5px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: #ddd;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: #ff4d6d;
+            cursor: pointer;
+        }
+
+        .volume-slider::-moz-range-thumb {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: #ff4d6d;
+            cursor: pointer;
+            border: none;
+        }
+
         /* Animations */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
@@ -501,6 +574,12 @@
             80% { transform: translateX(5px) rotate(1deg); }
         }
 
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             h1 { font-size: 3.5rem; }
@@ -516,6 +595,9 @@
             .love-letter { padding: 40px 20px; }
             .countdown-timer { font-size: 2rem; }
             .countdown-value { font-size: 3rem; }
+            .music-controls { top: 10px; right: 10px; padding: 8px 12px; }
+            .music-info { display: none; }
+            .volume-slider { width: 60px; }
         }
 
         @media (max-width: 480px) {
@@ -523,10 +605,28 @@
             .subtitle { font-size: 1.2rem; }
             .qualities-container { grid-template-columns: 1fr; }
             .countdown-timer { flex-wrap: wrap; gap: 15px; }
+            .music-controls { flex-direction: column; align-items: center; }
         }
     </style>
 </head>
 <body>
+    <!-- Background Music (hidden) -->
+    <audio id="background-music" loop>
+        <source src="song.mp4" type="audio/mp4">
+        <source src="song.mp3" type="audio/mpeg">
+        <source src="song.ogg" type="audio/ogg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Music Controls -->
+    <div class="music-controls">
+        <button class="music-btn" id="play-pause-btn">
+            <i class="fas fa-play"></i>
+        </button>
+        <div class="music-info" id="music-info">Our Song ♫</div>
+        <input type="range" class="volume-slider" id="volume-slider" min="0" max="1" step="0.1" value="0.5">
+    </div>
+
     <!-- Header -->
     <header>
         <div class="header-content">
@@ -536,6 +636,9 @@
             </div>
             <p class="subtitle">This journey is just for you, my love</p>
             <p class="subtitle">Complete the challenges to discover my question</p>
+            <p class="subtitle" style="font-size: 1.2rem; margin-top: 20px;">
+                <i class="fas fa-music"></i> Our special song is playing in the background
+            </p>
         </div>
         <div class="scroll-indicator">
             <i class="fas fa-chevron-down" style="font-size: 2rem; position: absolute; bottom: 30px;"></i>
@@ -629,7 +732,7 @@
                     <p>Compare me with others and choose the better option!</p>
                 </div>
                 <div class="comparison-game">
-                    <div class="king-title" id="round-title">Round 1: Who deserves to be King of your heart?</div>
+                    <div class="king-title" id="round-title">Round 1: Who makes your heart beat faster?</div>
                     <div class="comparison-container" id="comparison-container">
                         <!-- Comparison options will be added by JavaScript -->
                     </div>
@@ -725,14 +828,111 @@
             <p>Made with <i class="fas fa-heart" style="color: #ff4d6d;"></i> for the most amazing woman in the world</p>
             <p>My love for you is eternal, Nuzuu</p>
             <p>© <span id="current-year"></span> Forever Yours</p>
+            <p style="margin-top: 20px; font-size: 0.9rem; opacity: 0.7;">
+                <i class="fas fa-music"></i> Our song continues to play as a symbol of our endless love
+            </p>
         </div>
     </footer>
 
     <script>
-        // Set current year in footer
-        document.getElementById('current-year').textContent = new Date().getFullYear();
+        // ============================================
+        // BACKGROUND MUSIC SYSTEM
+        // ============================================
+        const backgroundMusic = document.getElementById('background-music');
+        const playPauseBtn = document.getElementById('play-pause-btn');
+        const volumeSlider = document.getElementById('volume-slider');
+        const musicInfo = document.getElementById('music-info');
         
-        // Countdown Timer - Setting for 1 year from now
+        // Auto-play music when page loads (with user interaction requirement)
+        document.addEventListener('DOMContentLoaded', function() {
+            // Try to play music automatically (modern browsers require user interaction)
+            const playMusic = () => {
+                backgroundMusic.volume = 0.5;
+                backgroundMusic.loop = true;
+                
+                // Try to play
+                const playPromise = backgroundMusic.play();
+                
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        // Update button to show pause
+                        playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                        musicInfo.innerHTML = 'Our Song ♫ <i class="fas fa-volume-up"></i>';
+                    }).catch(error => {
+                        // Auto-play was prevented, show play button
+                        playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+                        musicInfo.innerHTML = 'Click to play our song ♫';
+                        console.log("Auto-play prevented. User needs to interact first.");
+                    });
+                }
+            };
+            
+            // Try to play immediately
+            playMusic();
+            
+            // Also try on first user interaction
+            document.addEventListener('click', function initAudio() {
+                playMusic();
+                document.removeEventListener('click', initAudio);
+            }, { once: true });
+        });
+        
+        // Play/Pause button functionality
+        playPauseBtn.addEventListener('click', function() {
+            if (backgroundMusic.paused) {
+                backgroundMusic.play();
+                playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                musicInfo.innerHTML = 'Our Song ♫ <i class="fas fa-volume-up"></i>';
+                playPauseBtn.style.animation = 'pulse 0.5s';
+                setTimeout(() => {
+                    playPauseBtn.style.animation = '';
+                }, 500);
+            } else {
+                backgroundMusic.pause();
+                playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+                musicInfo.innerHTML = 'Music Paused';
+            }
+        });
+        
+        // Volume control
+        volumeSlider.addEventListener('input', function() {
+            backgroundMusic.volume = this.value;
+            // Update music info with volume indicator
+            const volumeLevel = this.value * 100;
+            musicInfo.innerHTML = `Volume: ${Math.round(volumeLevel)}%`;
+            
+            // Show different icons based on volume
+            setTimeout(() => {
+                if (volumeLevel === 0) {
+                    musicInfo.innerHTML = 'Our Song ♫ <i class="fas fa-volume-mute"></i>';
+                } else if (volumeLevel < 50) {
+                    musicInfo.innerHTML = 'Our Song ♫ <i class="fas fa-volume-down"></i>';
+                } else {
+                    musicInfo.innerHTML = 'Our Song ♫ <i class="fas fa-volume-up"></i>';
+                }
+            }, 1000);
+        });
+        
+        // Update music info when song ends (should loop)
+        backgroundMusic.addEventListener('ended', function() {
+            // Song ended but should loop automatically
+            musicInfo.innerHTML = 'Our Song ♫ <i class="fas fa-redo"></i>';
+            setTimeout(() => {
+                musicInfo.innerHTML = 'Our Song ♫ <i class="fas fa-volume-up"></i>';
+            }, 1000);
+        });
+        
+        // Visual feedback when song is playing
+        backgroundMusic.addEventListener('play', function() {
+            musicInfo.style.color = '#ff4d6d';
+            setTimeout(() => {
+                musicInfo.style.color = '#a12c51';
+            }, 500);
+        });
+        
+        // ============================================
+        // COUNTDOWN TIMER
+        // ============================================
         function updateCountdown() {
             // Set the target date (1 year from now)
             const targetDate = new Date();
@@ -757,6 +957,13 @@
         // Update countdown every second
         setInterval(updateCountdown, 1000);
         updateCountdown(); // Initial call
+        
+        // ============================================
+        // GAME SYSTEM
+        // ============================================
+        
+        // Set current year in footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
         
         // Game State
         let gameState = {
@@ -818,6 +1025,12 @@
                 nameInput.disabled = true;
                 nameSubmit.disabled = true;
                 
+                // Play happy sound effect
+                backgroundMusic.volume = 0.7;
+                setTimeout(() => {
+                    backgroundMusic.volume = volumeSlider.value;
+                }, 500);
+                
                 // Show Game 2 after delay
                 setTimeout(() => {
                     document.getElementById('game-2').style.display = 'block';
@@ -838,6 +1051,13 @@
                     }
                     nameInput.value = '';
                     nameInput.focus();
+                    
+                    // Play error sound (subtle volume dip)
+                    const currentVolume = backgroundMusic.volume;
+                    backgroundMusic.volume = 0.3;
+                    setTimeout(() => {
+                        backgroundMusic.volume = currentVolume;
+                    }, 300);
                 } else {
                     // After max attempts, let her proceed anyway
                     nameHint.textContent = "Alright, I'll give you a hint for next time... Think: Nuzuu + Alok 😉";
@@ -916,6 +1136,12 @@
                     button.classList.add('selected');
                     gameState.selectedQualities++;
                     
+                    // Play positive sound
+                    backgroundMusic.volume = 0.7;
+                    setTimeout(() => {
+                        backgroundMusic.volume = volumeSlider.value;
+                    }, 200);
+                    
                     // Update counter
                     qualityCounter.textContent = `Selected: ${gameState.selectedQualities}/${gameState.totalGoodQualities} good qualities`;
                     
@@ -923,10 +1149,24 @@
                     if (gameState.selectedQualities >= gameState.totalGoodQualities) {
                         qualitiesSubmit.disabled = false;
                         qualitiesSubmit.innerHTML = '<i class="fas fa-heart"></i> Continue to Next Challenge <i class="fas fa-heart"></i>';
+                        
+                        // Play celebration sound
+                        backgroundMusic.volume = 0.8;
+                        setTimeout(() => {
+                            backgroundMusic.volume = volumeSlider.value;
+                        }, 1000);
                     }
                 } else {
                     // Bad quality - show wrong animation and disable
                     button.classList.add('wrong');
+                    
+                    // Play error sound
+                    const currentVolume = backgroundMusic.volume;
+                    backgroundMusic.volume = 0.3;
+                    setTimeout(() => {
+                        backgroundMusic.volume = currentVolume;
+                    }, 300);
+                    
                     setTimeout(() => {
                         button.classList.remove('wrong');
                         button.classList.add('disabled');
@@ -1024,6 +1264,12 @@
                 comparisonHint.textContent = "Perfect choice! Of course it's me!";
                 comparisonHint.classList.add('show');
                 
+                // Play happy sound
+                backgroundMusic.volume = 0.7;
+                setTimeout(() => {
+                    backgroundMusic.volume = volumeSlider.value;
+                }, 500);
+                
                 // Move to next round or complete game
                 setTimeout(() => {
                     if (gameState.comparisonRound < gameState.totalComparisonRounds) {
@@ -1034,6 +1280,12 @@
                         gameState.comparisonCompleted = true;
                         comparisonHint.textContent = "You chose me every time! You're ready for the final challenge!";
                         comparisonHint.classList.add('show');
+                        
+                        // Play celebration sound
+                        backgroundMusic.volume = 0.8;
+                        setTimeout(() => {
+                            backgroundMusic.volume = volumeSlider.value;
+                        }, 1000);
                         
                         // Show photos section after delay
                         setTimeout(() => {
@@ -1049,6 +1301,13 @@
                 comparisonHint.textContent = "Wrong choice! Try again - pick the King of your heart!";
                 comparisonHint.classList.add('show');
                 
+                // Play error sound
+                const currentVolume = backgroundMusic.volume;
+                backgroundMusic.volume = 0.3;
+                setTimeout(() => {
+                    backgroundMusic.volume = currentVolume;
+                }, 300);
+                
                 // Remove vibration class after animation
                 setTimeout(() => {
                     option.classList.remove('wrong');
@@ -1063,6 +1322,9 @@
             document.getElementById('final-proposal').style.display = 'block';
             updateProgress();
             document.getElementById('final-proposal').scrollIntoView({ behavior: 'smooth' });
+            
+            // Increase volume for proposal
+            backgroundMusic.volume = 0.6;
         });
         
         // Final Proposal
@@ -1085,6 +1347,10 @@
             // Show love letter
             document.getElementById('love-letter').style.display = 'block';
             document.getElementById('letter-content').classList.add('show');
+            
+            // Play final celebration music at full volume
+            backgroundMusic.volume = 1;
+            musicInfo.innerHTML = 'Celebration! ♫ <i class="fas fa-volume-up"></i>';
             
             // Create celebration
             createCelebration();
@@ -1110,6 +1376,20 @@
                 
                 // Make button bigger
                 finalNo.style.transform = `scale(${1 + (noClickCount * 0.1)})`;
+                
+                // Play funny sound effect
+                if (noClickCount < 5) {
+                    backgroundMusic.volume = 0.4;
+                    setTimeout(() => {
+                        backgroundMusic.volume = volumeSlider.value;
+                    }, 200);
+                } else {
+                    // Louder sound as she persists
+                    backgroundMusic.volume = 0.2;
+                    setTimeout(() => {
+                        backgroundMusic.volume = volumeSlider.value;
+                    }, 300);
+                }
                 
                 // After several clicks, force yes
                 if (noClickCount >= 5) {
@@ -1219,6 +1499,16 @@
                 console.log("Could not load image: " + url);
             };
         });
+        
+        // Preload music file
+        const music = new Audio();
+        music.src = 'song.mp4';
+        music.preload = 'auto';
+        music.onerror = function() {
+            console.log("Could not load music file: song.mp4");
+            musicInfo.innerHTML = 'Music file not found';
+            musicInfo.style.color = '#f44336';
+        };
     </script>
 </body>
 </html>
